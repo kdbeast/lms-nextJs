@@ -21,9 +21,9 @@ import { Button } from "../components/ui/button";
 import { Show, SignInButton, UserButton, useAuth } from "@clerk/nextjs";
 
 const loggedOutLinks = [
-  { href: "#courses", label: "Courses" },
+  { href: "/#courses", label: "Courses" },
   { href: "/pricing", label: "Pricing" },
-  { href: "#testimonials", label: "Reviews" },
+  { href: "/#testimonials", label: "Reviews" },
 ];
 
 export function Header() {
