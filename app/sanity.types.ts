@@ -400,6 +400,79 @@ export type AllSanitySchemaTypes =
   | SanityImageAsset
   | Geopoint;
 
+// Source: app/components/admin/layout/AdminBreadcrumb.tsx
+// Variable: COURSE_QUERY
+// Query: *[_type == "course" && _id match "*" + $baseId][0]{ title }
+export type COURSE_QUERY_RESULT = {
+  title: string | null;
+} | null;
+
+// Source: app/components/admin/layout/AdminBreadcrumb.tsx
+// Variable: MODULE_QUERY
+// Query: {  "module": *[_type == "module" && _id match "*" + $baseId][0]{ title },  "course": *[_type == "course" && $baseId in modules[]._ref][0]{ _id, title }}
+export type MODULE_QUERY_RESULT = {
+  module: {
+    title: string | null;
+  } | null;
+  course: {
+    _id: string;
+    title: string | null;
+  } | null;
+};
+
+// Source: app/components/admin/layout/AdminBreadcrumb.tsx
+// Variable: LESSON_QUERY
+// Query: {  "lesson": *[_type == "lesson" && _id match "*" + $baseId][0]{ title },  "module": *[_type == "module" && $baseId in lessons[]._ref][0]{ _id, title },  "course": *[_type == "course" && count(modules[@._ref in *[_type == "module" && $baseId in lessons[]._ref]._id]) > 0][0]{ _id, title }}
+export type LESSON_QUERY_RESULT = {
+  lesson: {
+    title: string | null;
+  } | null;
+  module: {
+    _id: string;
+    title: string | null;
+  } | null;
+  course: {
+    _id: string;
+    title: string | null;
+  } | null;
+};
+
+// Source: app/components/admin/layout/AdminBreadcrumb.tsx
+// Variable: CATEGORY_QUERY
+// Query: *[_type == "category" && _id match "*" + $baseId][0]{ title }
+export type CATEGORY_QUERY_RESULT = {
+  title: string | null;
+} | null;
+
+// Source: app/components/admin/layout/AdminBreadcrumb.tsx
+// Variable: NULL_QUERY
+// Query: null
+export type NULL_QUERY_RESULT = null;
+
+// Source: app/lib/ai/tools/search-courses.tsx
+// Variable: ALL_COURSES_WITH_CONTENT_QUERY
+// Query: *[  _type == "course"] | order(_createdAt desc) {  _id,  title,  "slug": slug.current,  description,  tier,  "category": category->title,  modules[]-> {    _id,    title,    description,    lessons[]-> {      _id,      title,      "slug": slug.current,      description,      "contentText": pt::text(content)    }  }}
+export type ALL_COURSES_WITH_CONTENT_QUERY_RESULT = Array<{
+  _id: string;
+  title: string | null;
+  slug: string | null;
+  description: string | null;
+  tier: "free" | "pro" | "ultra" | null;
+  category: string | null;
+  modules: Array<{
+    _id: string;
+    title: string | null;
+    description: string | null;
+    lessons: Array<{
+      _id: string;
+      title: string | null;
+      slug: string | null;
+      description: string | null;
+      contentText: string;
+    }> | null;
+  }> | null;
+}>;
+
 // Source: app/sanity/lib/queries.ts
 // Variable: FEATURED_COURSES_QUERY
 // Query: *[  _type == "course"  && featured == true] | order(_createdAt desc)[0...6] {  _id,  title,  slug,  description,  tier,  featured,  thumbnail {    asset-> {      _id,      url    }  },  "moduleCount": count(modules),  "lessonCount": count(modules[]->lessons[])}
@@ -755,6 +828,12 @@ export type LESSON_NAVIGATION_QUERY_RESULT = {
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
+    '*[_type == "course" && _id match "*" + $baseId][0]{ title }': COURSE_QUERY_RESULT;
+    '{\n  "module": *[_type == "module" && _id match "*" + $baseId][0]{ title },\n  "course": *[_type == "course" && $baseId in modules[]._ref][0]{ _id, title }\n}': MODULE_QUERY_RESULT;
+    '{\n  "lesson": *[_type == "lesson" && _id match "*" + $baseId][0]{ title },\n  "module": *[_type == "module" && $baseId in lessons[]._ref][0]{ _id, title },\n  "course": *[_type == "course" && count(modules[@._ref in *[_type == "module" && $baseId in lessons[]._ref]._id]) > 0][0]{ _id, title }\n}': LESSON_QUERY_RESULT;
+    '*[_type == "category" && _id match "*" + $baseId][0]{ title }': CATEGORY_QUERY_RESULT;
+    null: NULL_QUERY_RESULT;
+    '*[\n  _type == "course"\n] | order(_createdAt desc) {\n  _id,\n  title,\n  "slug": slug.current,\n  description,\n  tier,\n  "category": category->title,\n  modules[]-> {\n    _id,\n    title,\n    description,\n    lessons[]-> {\n      _id,\n      title,\n      "slug": slug.current,\n      description,\n      "contentText": pt::text(content)\n    }\n  }\n}': ALL_COURSES_WITH_CONTENT_QUERY_RESULT;
     '*[\n  _type == "course"\n  && featured == true\n] | order(_createdAt desc)[0...6] {\n  _id,\n  title,\n  slug,\n  description,\n  tier,\n  featured,\n  thumbnail {\n    asset-> {\n      _id,\n      url\n    }\n  },\n  "moduleCount": count(modules),\n  "lessonCount": count(modules[]->lessons[])\n}': FEATURED_COURSES_QUERY_RESULT;
     '*[\n  _type == "course"\n] | order(_createdAt desc) {\n  _id,\n  title,\n  slug,\n  description,\n  tier,\n  featured,\n  thumbnail {\n    asset-> {\n      _id,\n      url\n    }\n  },\n  "moduleCount": count(modules),\n  "lessonCount": count(modules[]->lessons[])\n}': ALL_COURSES_QUERY_RESULT;
     '*[\n  _type == "course"\n  && _id == $id\n][0] {\n  _id,\n  title,\n  slug,\n  description,\n  tier,\n  featured,\n  thumbnail {\n    asset-> {\n      _id,\n      url\n    }\n  },\n  category-> {\n    _id,\n    title\n  },\n  modules[]-> {\n    _id,\n    title,\n    description,\n    lessons[]-> {\n      _id,\n      title,\n      slug\n    }\n  }\n}': COURSE_BY_ID_QUERY_RESULT;
