@@ -18,8 +18,12 @@ export function CourseContent({ course, userId }: CourseContentProps) {
   const { isLoaded: isAuthLoaded } = useAuth();
   const userTier = useUserTier();
 
+  console.log(userTier, "userTier");
+
   // Check if user has access to this course
   const hasAccess = hasTierAccess(userTier, course.tier);
+
+  console.log(hasAccess, "hasAccess", course);
 
   // Calculate completion stats from actual lesson data
   let totalLessons = 0;

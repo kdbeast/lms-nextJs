@@ -23,6 +23,10 @@ export default async function DashboardPage() {
     getUserTier(),
   ]);
 
+  console.log(user, "user");
+  console.log(courses, "courses");
+  console.log(userTier, "userTier");
+
   const firstName = user.firstName ?? user.username ?? "there";
 
   return (

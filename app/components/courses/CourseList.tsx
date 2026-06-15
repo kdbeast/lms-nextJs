@@ -110,7 +110,7 @@ export function CourseList({
                 setTierFilter("all");
                 setSearchQuery("");
               }}
-              className="mt-2 text-sm text-violet-400 hover:text-violet-300 transition-colors"
+              className="mt-2 text-sm text-violet-400 hover:text-violet-300 transition-colors cursor-pointer"
             >
               Clear filters
             </button>

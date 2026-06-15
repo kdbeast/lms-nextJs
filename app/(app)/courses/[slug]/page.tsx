@@ -18,6 +18,8 @@ export default async function CoursePage({ params }: CoursePageProps) {
     params: { slug, userId: userId },
   });
 
+  console.log(course, 'course')
+
   if (!course) {
     notFound();
   }

@@ -28,6 +28,9 @@ export default async function Home() {
     currentUser(),
   ]);
 
+  console.log(user, "user");
+  console.log(courses, "courses");
+
   const stats = statsData as {
     courseCount?: number;
     lessonCount?: number;

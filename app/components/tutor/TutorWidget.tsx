@@ -72,7 +72,7 @@ function TutorPanel() {
                 p-2.5 rounded-xl
                 text-slate-400 hover:text-white
                 hover:bg-white/10
-                transition-colors
+                transition-colors cursor-pointer
               "
               aria-label="Close chat"
             >
@@ -101,7 +101,7 @@ function TutorPanel() {
           hover:shadow-xl hover:shadow-cyan-500/40
           transition-all duration-300
           flex items-center justify-center
-          group
+          group cursor-pointer
           ${isOpen ? "scale-0 opacity-0" : "scale-100 opacity-100"}
         `}
         aria-label="Open AI tutor"
