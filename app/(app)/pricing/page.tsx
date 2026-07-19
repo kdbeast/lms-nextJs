@@ -180,7 +180,7 @@ export default function PricingPage() {
         </div>
 
         {/* FAQ or extra info */}
-        <div className="mt-16 text-center">
+        {/* <div className="mt-16 text-center">
           <p className="text-zinc-400">
             Questions?{" "}
             <Link
@@ -197,7 +197,7 @@ export default function PricingPage() {
               FAQ
             </Link>
           </p>
-        </div>
+        </div> */}
       </main>
 
       {/* Footer */}
@@ -207,7 +207,7 @@ export default function PricingPage() {
             <div className="w-8 h-8 rounded-lg bg-linear-to-br from-violet-500 to-fuchsia-600 flex items-center justify-center">
               <Code2 className="w-4 h-4 text-white" />
             </div>
-            <span className="font-bold">Sonny&apos;s Academy</span>
+            <span className="font-bold">Karan&apos;s Academy</span>
           </div>
           <div className="flex items-center gap-8 text-sm text-zinc-500">
             <Link href="#" className="hover:text-white transition-colors">
@@ -221,7 +221,7 @@ export default function PricingPage() {
             </Link>
           </div>
           <p className="text-sm text-zinc-600">
-            2024 Sonny&apos;s Academy. All rights reserved.
+            2026 Karan&apos;s Academy. All rights reserved.
           </p>
         </div>
       </footer>
